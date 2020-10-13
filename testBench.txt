@@ -1,0 +1,12 @@
+module mkTb (Empty);
+	Oem oem <- mkOem ();
+	
+	int arr[32] = {5, 12, 4, 6, 5, 12, 4, 6, 5, 12, 4, 6, 5, 12, 4, 6, 5, 12, 4, 6, 5, 12, 4, 6, 5, 12, 4, 6, 5, 12, 4, 6};
+    	Vector#(32, int) vec = arrayToVector(arr);
+	Reg#(int) a <- mkConfigReg (0);
+
+	rule test (a == 0);
+		oem.getInput (vec);	// takes input. Then rules fire for sorting, displaying and finishing the program.
+		a <= 1;	// Had to do this to avoid rule from firing multiple times. $finish(0) happens in the mkOem module.
+	endrule
+endmodule: mkTb
